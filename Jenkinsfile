@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git 'https://github.com/Siddhantt/flask-ci-app.git'
+        git branch: 'main', url: 'https://github.com/Siddhantt/flask-ci-app.git'
       }
     }
 
@@ -41,6 +41,12 @@ pipeline {
           '''
         }
       }
+    }
+  }
+
+  post {
+    always {
+      cleanWs()
     }
   }
 }
