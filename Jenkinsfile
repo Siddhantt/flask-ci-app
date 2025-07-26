@@ -52,17 +52,12 @@ stage('Scan with Trivy') {
 }
 
 
-    stage('Push to DockerHub') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-          sh '''
-            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-            docker push $DOCKER_IMAGE
-          '''
-        }
-      }
-    }
-  }
+withCredentials([usernamePassword(credentialsId: '85bc93fd-2953-47ea-845f-f0107b3f8db1', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+    sh '''
+        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+        docker push siddhant271299/flask-ci-app
+    '''
+}
 
   post {
     always {
