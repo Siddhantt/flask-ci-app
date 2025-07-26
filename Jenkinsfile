@@ -18,6 +18,16 @@ pipeline {
           sh 'sonar-scanner'
         }
       }
+      post {
+        success {
+          script {
+            def qg = waitForQualityGate()
+            if (qg.status != 'OK') {
+              error "Quality gate failed: ${qg.status}"
+            }
+          }
+        }
+      }
     }
 
     stage('Build Docker Image') {
@@ -28,7 +38,7 @@ pipeline {
 
     stage('Scan with Trivy') {
       steps {
-        sh 'trivy image --exit-code 0 --severity CRITICAL,HIGH $DOCKER_IMAGE'
+        sh 'trivy image --exit-code 1 --severity CRITICAL,HIGH $DOCKER_IMAGE'
       }
     }
 
