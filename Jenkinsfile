@@ -37,18 +37,20 @@ pipeline {
       }
     }
 
-    stage('Scan with Trivy') {
-      steps {
-        sh '''
-          trivy image \
-            --exit-code 0 \
-            --severity CRITICAL,HIGH \
-            --ignore-unfixed \
-            --ignorefile .trivyignore \
-            $DOCKER_IMAGE
-        '''
-      }
-    }
+stage('Scan with Trivy') {
+  steps {
+    sh '''
+      if [ -f .trivyignore ]; then
+        echo "[INFO] .trivyignore found. Using it in Trivy scan."
+        trivy image --exit-code 0 --severity CRITICAL,HIGH --ignore-unfixed --ignorefile .trivyignore $DOCKER_IMAGE
+      else
+        echo "[WARN] .trivyignore not found. Proceeding without it."
+        trivy image --exit-code 0 --severity CRITICAL,HIGH --ignore-unfixed $DOCKER_IMAGE
+      fi
+    '''
+  }
+}
+
 
     stage('Push to DockerHub') {
       steps {
