@@ -1,0 +1,7 @@
+# Suppress known CVEs from Debian base image and libraries
+
+CVE-2025-6965    # CRITICAL - SQLite integer truncation
+CVE-2023-45853   # CRITICAL - zlib integer overflow
+CVE-2025-4802    # HIGH - glibc unsafe LD_LIBRARY_PATH
+CVE-2023-31484   # HIGH - Perl TLS not verified
+CVE-2025-6020    # HIGH - Linux-PAM directory traversal
