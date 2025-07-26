@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+*.log
+.dockerignore
+Dockerfile
+.git/
+.vscode/
+sonar-project.properties
