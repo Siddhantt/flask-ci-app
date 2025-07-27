@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    DOCKER_IMAGE = "siddhant271299/flask-ci-app"
+    DOCKER_IMAGE = "siddhant271299/flask-ci-app:v2"
   }
 
   stages {
