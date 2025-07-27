@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: calculator
-          image: siddhant271299/flask-ci-app
+          image: siddhant271299/flask-ci-app:v2
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
