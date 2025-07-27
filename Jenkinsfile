@@ -57,7 +57,25 @@ pipeline {
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
             docker push $DOCKER_IMAGE
           '''
+        }
+      }
+    }
 
+    stage('Deploy to Kubernetes') {
+      steps {
+        script {
+          sh '''
+            echo "[INFO] Deploying to Kubernetes cluster..."
+
+            # Verify K8s context
+            kubectl config current-context
+
+            # Apply K8s manifests
+            kubectl apply -f k8s/deployment.yaml
+            kubectl apply -f k8s/service.yaml
+
+            echo "[SUCCESS] Deployed to Kubernetes."
+          '''
         }
       }
     }
@@ -69,4 +87,3 @@ pipeline {
     }
   }
 }
-
