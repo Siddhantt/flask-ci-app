@@ -67,6 +67,9 @@ pipeline {
           sh '''
             echo "[INFO] Deploying to Kubernetes cluster..."
 
+            # Generate kubeconfig in the Jenkins shell
+            aws eks update-kubeconfig --region ap-south-1 --name EKS-Cluster
+
             # Verify K8s context
             kubectl config current-context
 
